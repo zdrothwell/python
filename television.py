@@ -4,38 +4,51 @@ class Television:
     MIN_CHANNEL = 0
     MAX_CHANNEL = 3
 
-    def __init__(self):
+    def __init__(self) -> None:
+        """Initialize a Television instance"""
         self.__status = False
         self.__muted = False
         self.__volume = Television.MIN_VOLUME
         self.__channel = Television.MIN_CHANNEL
         self.__stored = 0
 
-    def power(self):
+    def power(self) -> None:
+        """Toggle the power status of the television"""
         self.__status = not self.__status
 
-    def mute(self):
+    def mute(self) -> None:
+        """Mute or unmute the television"""
         if self.__status is True:
             if self.__muted is False:
                 self.__muted = True
                 self.__stored = self.__volume
                 self.__volume = Television.MIN_VOLUME
 
-    def channel_up(self):
+    def channel_up(self) -> None:
+        """Increase the channel by 1.
+        This also makes the channel loop back
+        to the minimum channel if it goes over"""
         if self.__status is True:
             if self.__channel < Television.MAX_CHANNEL:
                 self.__channel += 1
             elif self.__channel == Television.MAX_CHANNEL:
                 self.__channel = Television.MIN_CHANNEL
 
-    def channel_down(self):
+    def channel_down(self) -> None:
+        """Decrease the channel by 1.
+        This also makes the channel loop back
+        to the maximum channel if it goes under"""
+
         if self.__status is True:
             if self.__channel > Television.MIN_CHANNEL:
                 self.__channel -= 1
             elif self.__channel == Television.MIN_CHANNEL:
                 self.__channel = Television.MAX_CHANNEL
 
-    def volume_up(self):
+    def volume_up(self) -> None:
+        """Increase the volume by 1.
+        If the TV is muted, it unmutes
+        then adds to the volume"""
         if self.__status is True:
             if self.__muted is True:
                 self.__muted = False
@@ -46,7 +59,10 @@ class Television:
                 if self.__volume < Television.MAX_VOLUME:
                     self.__volume += 1
 
-    def volume_down(self):
+    def volume_down(self) -> None:
+        """Decrease the volume by 1.
+        This also unmutes the TV just like
+        volume_up and decreases the volume"""
         if self.__status is True:
             if self.__muted is True:
                 self.__muted = False
@@ -57,5 +73,6 @@ class Television:
                 if self.__volume > Television.MIN_VOLUME:
                     self.__volume -= 1
 
-    def __str__(self):
+    def __str__(self) -> str:
+        """Returns a string of the TV's current status"""
         return f'Power = {self.__status}, Channel = {self.__channel}, Volume = {self.__volume}.'
