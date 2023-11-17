@@ -1,5 +1,5 @@
 import pytest
-from television import Television
+from television import *
 # ignore unresolved reference
 
 
