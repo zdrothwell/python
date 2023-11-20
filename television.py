@@ -10,7 +10,6 @@ class Television:
         self.__muted = False
         self.__volume = Television.MIN_VOLUME
         self.__channel = Television.MIN_CHANNEL
-        self.__stored = 0
 
     def power(self) -> None:
         """Toggle the power status of the television"""
@@ -19,10 +18,7 @@ class Television:
     def mute(self) -> None:
         """Mute or unmute the television"""
         if self.__status is True:
-            if self.__muted is False:
-                self.__muted = True
-                self.__stored = self.__volume
-                self.__volume = Television.MIN_VOLUME
+            self.__muted = not self.__muted
 
     def channel_up(self) -> None:
         """Increase the channel by 1.
@@ -50,29 +46,22 @@ class Television:
         If the TV is muted, it unmutes
         then adds to the volume"""
         if self.__status is True:
-            if self.__muted is True:
-                self.__muted = False
-                self.__volume = self.__stored
-                if self.__volume < Television.MAX_VOLUME:
-                    self.__volume += 1
-            else:
-                if self.__volume < Television.MAX_VOLUME:
-                    self.__volume += 1
+            self.__muted = False
+            if self.__volume < Television.MAX_VOLUME:
+                self.__volume += 1
 
     def volume_down(self) -> None:
         """Decrease the volume by 1.
         This also unmutes the TV just like
         volume_up and decreases the volume"""
         if self.__status is True:
-            if self.__muted is True:
-                self.__muted = False
-                self.__volume = self.__stored
-                if self.__volume > Television.MIN_VOLUME:
-                    self.__volume -= 1
-            else:
-                if self.__volume > Television.MIN_VOLUME:
-                    self.__volume -= 1
+            self.__muted = False
+            if self.__volume > Television.MIN_VOLUME:
+                self.__volume -= 1
 
     def __str__(self) -> str:
         """Returns a string of the TV's current status"""
-        return f'Power = {self.__status}, Channel = {self.__channel}, Volume = {self.__volume}.'
+        if self.__muted is True:
+            return "Power = {}, Channel = {}, Volume = {}".format(self.__status, self.__channel, Television.MIN_VOLUME)
+        else:
+            return f'Power = {self.__status}, Channel = {self.__channel}, Volume = {self.__volume}.'
